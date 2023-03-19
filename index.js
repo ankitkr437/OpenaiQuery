@@ -14,7 +14,7 @@ const openai = new OpenAIApi(configuration);
 
 
 app.get('/', async (req, res) => {
-    const sqlquery=req.query.sqlquery;
+    const sqlquery=`Given this SQL Query: ${req.query.sqlquery} What should be 1. the graph used 2. x-axis 3. y-axis 4. title of query ?`;
     try{
     const completion = await openai.createCompletion({
             model: "text-davinci-003",
