@@ -1,6 +1,6 @@
 import { Configuration, OpenAIApi } from "openai";
 import * as dotenv from 'dotenv';
-import express from 'express';
+import express, { json } from 'express';
 import mysql from "mysql"
 
 const app = express();
@@ -18,30 +18,20 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-// app.get('/api',async(req,res)=>{
-//   try{
-//     const sqlquery= req.query.sqlquery;
-//     console.log(sqlquery)
-//     await connection.query(sqlquery, function(err, results){
-//       if (err) throw err;
-//       res.send(results);
-//   });
-//   }
-//   catch (err) {
-//     res.status(500).json(err);
-//   }
-// })
-
-app.get("/api/users", (req, res) => {
-  var sql = "SELECT * FROM users";
-  connection.query(sql, function (error, result) {
+ 
+app.get("/api/query", (req, res) => {
+  var sqlquery= (req.query.sqlquery);
+  console.log(sqlquery);
+  connection.query(sqlquery, function (error, result) {
     if (error) {
-      console.log("Error Connecting to DB");
+      console.log(error);
     } else {
       res.send({ status: true, data: result });
     }
   });
 });
+
+ 
 
 
 app.get('/', async (req, res) => {
