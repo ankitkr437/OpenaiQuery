@@ -32,7 +32,7 @@ app.get("/api/query", (req, res) => {
 });
 
 app.get('/api/detail', async (req, res) => {
-    const sqlquery=`Given this SQL Query: ${req.query.sqlquery} What should be 1. the graph used 2. x-axis 3. y-axis 4. title of query ?`;
+    const sqlquery=`I need to build the graph on sql query: Given this SQL Query: ${req.query.sqlquery} What should be 1. the graph used 2. x-axis 3. y-axis 4. title of query ?`;
     try{
     const completion = await openai.createCompletion({
             model: "text-davinci-003",
@@ -45,6 +45,7 @@ app.get('/api/detail', async (req, res) => {
         "Graph_used":temp[2].split(". ")[1],
         "x-axis":temp[3].split(". ")[1],
         "y-axis":temp[4].split(". ")[1],
+        data
     });
     }
     catch (err) {
